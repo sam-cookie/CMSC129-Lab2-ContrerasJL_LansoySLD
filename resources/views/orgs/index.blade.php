@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<x-modal-add-org /> 
 <div class="w-full mx-auto px-6 py-6 grid grid-cols-2 gap-5 items-start">
 
     <!-- left panel (org details) -->
@@ -122,7 +123,7 @@
             </a>
         </div>
 
-        <!-- Regular rows -->
+        <!-- regular rows -->
         @for ($i = 0; $i < 8; $i++)
         <div class="flex items-center gap-3 px-4 py-3 bg-white border border-gray-200 rounded-xl cursor-pointer">
             <div class="w-10 h-9 rounded-full bg-gray-100 border-2 border-gray-300 flex items-center justify-center shrink-0">
