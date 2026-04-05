@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>UPV Orgz</title>
-
+    
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
@@ -128,6 +128,9 @@
                                 <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
                                     <input type="checkbox" name="filter_type[]" value="special_interest" class="accent-upv-green"> Special Interest
                                 </label>
+                                <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
+                                    <input type="checkbox" name="filter_type[]" value="other" class="accent-upv-green"> Other
+                                </label>
                             </div>
                         </div>
 
@@ -157,14 +160,14 @@
             </a>
 
             <!-- add org -->
-            <a href="{{ route('orgs.create') }}"
-               class="flex items-center gap-1.5 bg-upv-green text-white text-sm font-medium px-4 py-1.5 rounded-full no-underline whitespace-nowrap">
+            <button onclick="openAddOrgModal()"
+               class="flex items-center gap-1.5 bg-upv-green text-white text-sm font-medium px-4 py-1.5 rounded-full whitespace-nowrap cursor-pointer border-0">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24">
                     <line x1="12" y1="5" x2="12" y2="19"/>
                     <line x1="5" y1="12" x2="19" y2="12"/>
                 </svg>
                 add org
-            </a>
+            </button>
 
             <!-- archived orgs -->
             <a href="{{ route('orgs.archived') }}"
@@ -179,11 +182,23 @@
 
         </div>
     </nav>
-    
+
     <main>
         @yield('content')
     </main>
 
     @stack('scripts')
+
+    <script>
+        function openAddOrgModal() {
+            const modal = document.getElementById('addOrgModal');
+            if (modal) modal.classList.remove('hidden');
+        }
+        function closeAddOrgModal() {
+            const modal = document.getElementById('addOrgModal');
+            if (modal) modal.classList.add('hidden');
+        }
+    </script>
+
 </body>
 </html>
