@@ -58,6 +58,18 @@ class OrgController extends Controller
         return redirect()->route('orgs.index');
     }
 
+    public function destroy($id)
+    {
+        $org = Organization::findOrFail($id);
+
+        // delete images from storage
+        if ($org->logo) Storage::delete('public/' . $org->logo);
+        if ($org->cover) Storage::delete('public/' . $org->cover);
+
+        $org->delete();
+        return redirect()->route('orgs.archived');
+    }
+
     public function store(Request $request)
     {
         $request->validate([

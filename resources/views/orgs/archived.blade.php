@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@use('Illuminate\Support\Facades\Storage')
 
 @section('content')
     <div class="w-full mx-auto px-6 py-6 grid grid-cols-2 gap-5 items-start">
@@ -8,24 +9,32 @@
             <div class="bg-white border-2 border-gray-200 rounded-2xl p-4 shadow-sm">
                 <div class="relative">
                     <!-- cover -->
-                    <div class="bg-[#1a1a1a] rounded-2xl aspect-[16/7] flex items-center justify-center">
-                        <svg class="w-12 h-12 fill-white opacity-20" viewBox="0 0 24 24">
-                            <path
-                                d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z" />
-                        </svg>
+                    <div class="rounded-2xl aspect-[16/7] overflow-hidden bg-[#1a1a1a] flex items-center justify-center">
+                        @if ($orgs->count() > 0 && $orgs->first()->cover)
+                            <img src="{{ Storage::url($orgs->first()->cover) }}" class="w-full h-full object-cover">
+                        @else
+                            <svg class="w-12 h-12 fill-white opacity-20" viewBox="0 0 24 24">
+                                <path
+                                    d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z" />
+                            </svg>
+                        @endif
                     </div>
                     <!-- logo -->
                     <div
                         class="absolute -bottom-6 left-4 w-28 h-28 rounded-full bg-white border-4 border-white shadow-md flex items-center justify-center overflow-hidden">
-                        <div class="w-full h-full bg-gray-100 flex items-center justify-center">
-                            <svg class="w-8 h-8 fill-gray-400" viewBox="0 0 24 24">
-                                <path
-                                    d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z" />
-                            </svg>
-                        </div>
+                        @if ($orgs->count() > 0 && $orgs->first()->logo)
+                            <img src="{{ Storage::url($orgs->first()->logo) }}" class="w-full h-full object-cover">
+                        @else
+                            <div class="w-full h-full bg-gray-100 flex items-center justify-center">
+                                <svg class="w-8 h-8 fill-gray-400" viewBox="0 0 24 24">
+                                    <path
+                                        d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z" />
+                                </svg>
+                            </div>
+                        @endif
                     </div>
                 </div>
-                <div class="mt-5"></div>
+                <div class="mt-8"></div>
             </div>
 
             <!-- info card -->
@@ -76,11 +85,15 @@
                 <div class="flex items-center gap-3 px-4 py-3 bg-white border border-gray-200 rounded-xl cursor-pointer">
 
                     <div
-                        class="w-9 h-9 rounded-full bg-gray-100 border-2 border-gray-300 flex items-center justify-center shrink-0">
-                        <svg class="w-4 h-4 fill-gray-400" viewBox="0 0 24 24">
-                            <path
-                                d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z" />
-                        </svg>
+                        class="w-9 h-9 rounded-full bg-gray-100 border-2 border-gray-300 flex items-center justify-center shrink-0 overflow-hidden">
+                        @if ($org->logo)
+                            <img src="{{ Storage::url($org->logo) }}" class="w-full h-full object-cover">
+                        @else
+                            <svg class="w-4 h-4 fill-gray-400" viewBox="0 0 24 24">
+                                <path
+                                    d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z" />
+                            </svg>
+                        @endif
                     </div>
 
                     <span class="font-head font-bold text-sm flex-1 text-gray-800">{{ $org->name }}</span>
