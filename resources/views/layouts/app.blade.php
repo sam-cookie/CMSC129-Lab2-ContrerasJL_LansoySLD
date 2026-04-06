@@ -64,70 +64,103 @@
                     <!-- filter dropdown -->
                     <div
                         class="hidden absolute left-0 top-10 bg-white border border-gray-200 rounded-xl shadow-lg p-4 z-50 w-56">
-                        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Filter by</p>
+                        <form method="GET" action="{{ route('orgs.index') }}">
 
-                        <!-- status -->
-                        <div class="mb-3">
-                            <p class="text-xs text-gray-500 mb-1.5 font-medium">Status</p>
-                            <div class="flex flex-wrap gap-1.5">
-                                <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
-                                    <input type="radio" name="filter_status" value="all" class="accent-upv-green"
-                                        checked> All
-                                </label>
-                                <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
-                                    <input type="radio" name="filter_status" value="active" class="accent-upv-green">
-                                    Active
-                                </label>
-                                <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
-                                    <input type="radio" name="filter_status" value="inactive"
-                                        class="accent-upv-green"> Inactive
-                                </label>
+                            @if (request('q'))
+                                <input type="hidden" name="q" value="{{ request('q') }}">
+                            @endif
+
+                            <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Filter by</p>
+
+                            <!-- status -->
+                            <div class="mb-3">
+                                <p class="text-xs text-gray-500 mb-1.5 font-medium">Status</p>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
+                                        <input type="radio" name="filter_status" value="all"
+                                            class="accent-upv-green"
+                                            {{ request('filter_status', 'all') === 'all' ? 'checked' : '' }}> All
+                                    </label>
+                                    <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
+                                        <input type="radio" name="filter_status" value="active"
+                                            class="accent-upv-green"
+                                            {{ request('filter_status') === 'active' ? 'checked' : '' }}> Active
+                                    </label>
+                                    <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
+                                        <input type="radio" name="filter_status" value="inactive"
+                                            class="accent-upv-green"
+                                            {{ request('filter_status') === 'inactive' ? 'checked' : '' }}> Inactive
+                                    </label>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- org type -->
-                        <div class="mb-4">
-                            <p class="text-xs text-gray-500 mb-1.5 font-medium">Type</p>
-                            <div class="flex flex-wrap gap-1.5">
-                                <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
-                                    <input type="checkbox" name="filter_type[]" value="academic"
-                                        class="accent-upv-green"> Academic
-                                </label>
-                                <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
-                                    <input type="checkbox" name="filter_type[]" value="sports" class="accent-upv-green">
-                                    Sports
-                                </label>
-                                <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
-                                    <input type="checkbox" name="filter_type[]" value="performer"
-                                        class="accent-upv-green"> Arts & Performance
-                                </label>
-                                <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
-                                    <input type="checkbox" name="filter_type[]" value="political"
-                                        class="accent-upv-green"> Political
-                                </label>
-                                <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
-                                    <input type="checkbox" name="filter_type[]" value="culture_identity"
-                                        class="accent-upv-green"> Culture & Identity
-                                </label>
-                                <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
-                                    <input type="checkbox" name="filter_type[]" value="media"
-                                        class="accent-upv-green"> Media & Publication
-                                </label>
-                                <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
-                                    <input type="checkbox" name="filter_type[]" value="special_interest"
-                                        class="accent-upv-green"> Special Interest
-                                </label>
-                                <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
-                                    <input type="checkbox" name="filter_type[]" value="other"
-                                        class="accent-upv-green"> Other
-                                </label>
+                            <!-- org type -->
+                            <div class="mb-4">
+                                <p class="text-xs text-gray-500 mb-1.5 font-medium">Type</p>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
+                                        <input type="checkbox" name="filter_type[]" value="academic"
+                                            class="accent-upv-green"
+                                            {{ in_array('academic', request('filter_type', [])) ? 'checked' : '' }}>
+                                        Academic
+                                    </label>
+                                    <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
+                                        <input type="checkbox" name="filter_type[]" value="sports"
+                                            class="accent-upv-green"
+                                            {{ in_array('sports', request('filter_type', [])) ? 'checked' : '' }}>
+                                        Sports
+                                    </label>
+                                    <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
+                                        <input type="checkbox" name="filter_type[]" value="performer"
+                                            class="accent-upv-green"
+                                            {{ in_array('performer', request('filter_type', [])) ? 'checked' : '' }}>
+                                        Arts & Performance
+                                    </label>
+                                    <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
+                                        <input type="checkbox" name="filter_type[]" value="political"
+                                            class="accent-upv-green"
+                                            {{ in_array('political', request('filter_type', [])) ? 'checked' : '' }}>
+                                        Political
+                                    </label>
+                                    <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
+                                        <input type="checkbox" name="filter_type[]" value="culture_identity"
+                                            class="accent-upv-green"
+                                            {{ in_array('culture_identity', request('filter_type', [])) ? 'checked' : '' }}>
+                                        Culture & Identity
+                                    </label>
+                                    <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
+                                        <input type="checkbox" name="filter_type[]" value="media"
+                                            class="accent-upv-green"
+                                            {{ in_array('media', request('filter_type', [])) ? 'checked' : '' }}> Media
+                                        & Publication
+                                    </label>
+                                    <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
+                                        <input type="checkbox" name="filter_type[]" value="special_interest"
+                                            class="accent-upv-green"
+                                            {{ in_array('special_interest', request('filter_type', [])) ? 'checked' : '' }}>
+                                        Special Interest
+                                    </label>
+                                    <label class="flex items-center gap-1.5 text-xs text-gray-700 cursor-pointer">
+                                        <input type="checkbox" name="filter_type[]" value="other"
+                                            class="accent-upv-green"
+                                            {{ in_array('other', request('filter_type', [])) ? 'checked' : '' }}> Other
+                                    </label>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- apply button -->
-                        <button class="w-full bg-upv-green text-white text-xs font-semibold py-1.5 rounded-full hover:opacity-90 transition-opacity">
-                            Apply filters
-                        </button>
+                            <!-- apply + clear buttons -->
+                            <div class="flex gap-2">
+                                <button type="submit"
+                                    class="flex-1 bg-upv-green text-white text-xs font-semibold py-1.5 rounded-full hover:opacity-90 transition-opacity">
+                                    Apply filters
+                                </button>
+                                <a href="{{ route('orgs.index') }}"
+                                    class="flex-1 text-center border-2 border-gray-300 text-gray-500 text-xs font-semibold py-1.5 rounded-full hover:opacity-90 transition-opacity no-underline">
+                                    Clear
+                                </a>
+                            </div>
+
+                        </form>
                     </div>
                 </div>
 
@@ -135,7 +168,7 @@
 
             <div class="flex-1"></div>
 
-           <!-- orgs -->
+            <!-- orgs -->
             @php $onOrgs = request()->routeIs('orgs.index') || request()->routeIs('orgs.show'); @endphp
             <a href="{{ route('orgs.index') }}"
                 class="flex items-center gap-1.5 text-sm font-medium px-4 py-1.5 rounded-full no-underline whitespace-nowrap transition-all duration-150
