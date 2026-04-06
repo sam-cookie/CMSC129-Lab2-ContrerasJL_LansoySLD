@@ -14,7 +14,7 @@ class OrgController extends Controller
         $query = Organization::where('is_archived', false);
 
         if ($request->filled('q')) {
-            $query->where('name', 'like', '%' . $request->input('q') . '%');
+            $query->where('name', 'ilike', '%' . $request->input('q') . '%');
         }
 
         if ($request->filter_status && $request->filter_status !== 'all') {
@@ -50,6 +50,17 @@ class OrgController extends Controller
         $org = Organization::findOrFail($id);
         $org->update(['is_archived' => false]);
         return redirect()->route('orgs.archived');
+    }
+
+    public function search(Request $request)
+    {
+        $q = $request->input('q', '');
+        $orgs = Organization::where('is_archived', false)
+            ->where('name', 'ilike', '%' . $q . '%')
+            ->limit(5)
+            ->get(['id', 'name', 'type', 'logo']);
+
+        return response()->json($orgs);
     }
 
     public function show($id)
