@@ -50,15 +50,15 @@ php artisan key:generate
 ## Application Preview
 | Dashboard |
 | :---: |
-| <img src="screenshots/dashboard.png" width="750"> |
+| <img src="screenshots/dashboard.png">|
 | Archived |
- <img src="screenshots/archived.png" width="750"> |
+ <img src="screenshots/archived.png">|
 | Search / Filter |
-| <img src="screenshots/search.png" width="750"> | 
+| <img src="screenshots/search.png">| 
 | Add New Organization |
-| <img src="screenshots/addorg.png" width="750"> |
+| <img src="screenshots/addorg.png"> |
 | Edit Organization |
-| <img src="screenshots/editorg.png" width="750"> |
+| <img src="screenshots/editorg.png"> |
 ---
 
 ## Features
