@@ -43,10 +43,119 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-## Database Setup goes here
+## Database Setup
 
-## Migration commands goes here
- 
+### 1. Install PostgreSQL
+
+Make sure PostgreSQL is installed and running on your computer.
+
+### 2. Create a Database
+
+**Option A:** Using pgAdmin
+
+1. Open pgAdmin
+2. Right-click **Databases**
+3. Click **Create** → **Databases**
+4. Enter: Database name: `upv_orgs_db`
+5. Click **Save**
+
+**Option B:** Using SQL
+
+Run this in Query Tool:
+```bash
+CREATE DATABASE upv_orgs_db;
+```
+
+### 3. Configure `.env` file
+
+Open your Laravel project and update the `.env` file:
+
+```bash
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=upv_orgs_db
+DB_USERNAME=postgres
+DB_PASSWORD=your_password
+```
+
+### 4. Install PHP PostgreSQL Driver
+
+Make sure `pdo_pgsql` is enabled in your PHP installation in `php.ini`:
+
+```bash
+extension=pdo_pgsql
+extenshion=pgsql
+```
+
+Then restart your server (Laragon/XAMPP/etc)
+
+### 5. Verify Connection
+
+Run:
+
+```bash
+php artisan tinker
+```
+
+Then:
+
+```bash
+DB::connection()->getDatabaseName();
+```
+
+Your expected output should be `"upv_orgs_db"`
+
+## Migration Commands 
+
+*Migrations are used to create and manage database tables.*
+
+### 1. Run Migrations
+
+This command will create all the tables from your database.
+
+```bash
+php artisan migrate
+```
+
+### 2. Refresh Database (Reset + Re-run)
+
+This commmand drops all tabless and recreates them.
+
+```bash
+php artisan migrate:refresh
+```
+
+### 3. Fresh Migration (Clean Reset)
+
+To reset the data base run this command to delete all tables and run migrations again.
+
+```bash
+php artisan migrate:fresh
+```
+
+### 4. Run Seeders
+
+Seeders populates database with sample data.
+
+To run all seeding files:
+
+```bash
+php artisan db:seed
+```
+
+To run a specific seeder file (recommended for our project):
+
+```bash
+php artisan db:seed --class=OrganizationSeeder
+```
+
+### 5. Run both Migration and Seeder
+
+```bash
+php artisan migrate:fresh --seed
+```
+
 ## Application Preview
 | Dashboard |
 | :---: |
